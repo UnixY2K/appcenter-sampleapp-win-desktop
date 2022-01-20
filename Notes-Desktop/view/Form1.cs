@@ -2,19 +2,25 @@ namespace Notes_Desktop
 {
     public partial class Form1 : Form
     {
-        List<Note> notes = new List<Note>();
+        int ultimaNota = -1;
         public Form1()
         {
             InitializeComponent();
+            init();
+        }
+
+        void init()
+        {
+            loadNotes();
         }
 
         void loadNotes()
         {
-            notes = NoteDAO.instance.getNotes();
+            List<Note> notes = NoteDAO.instance.getNotes();
             foreach (Note note in notes)
             {
                 // add note to combobox
-                cmbNota.Items.Add(note.id);
+                cmbNota.Items.Add(note);
             }
             if (cmbNota.Items.Count > 0)
             {
@@ -27,13 +33,13 @@ namespace Notes_Desktop
         // recovers the selected note
         Note? getNote()
         {
-            if (cmbNota.SelectedIndex == -1)
+            if (ultimaNota == -1)
             {
                 return null;
             }
             else
             {
-                return cmbNota.SelectedItem as Note;
+                return cmbNota.Items[ultimaNota] as Note;
             }
         }
         private void newNoteItem_Click(object sender, EventArgs e)
@@ -43,6 +49,7 @@ namespace Notes_Desktop
             cmbNota.SelectedIndex = -1;
             cmbNota.DropDownStyle = ComboBoxStyle.DropDown;
             txtContenido.Text = "";
+            ultimaNota = -1;
         }
 
         private void deleteNoteItem_Click(object sender, EventArgs e)
@@ -52,8 +59,7 @@ namespace Notes_Desktop
             {
                 NoteDAO.instance.deleteNote(note.id);
                 cmbNota.Items.Remove(note);
-                cmbNota.SelectedIndex = -1;
-                txtContenido.Text = "";
+                cmbNota.SelectedIndex = 0;
             }
 
         }
@@ -79,7 +85,13 @@ namespace Notes_Desktop
 
         private void cmbNota_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            ultimaNota = cmbNota.SelectedIndex;
+            Note? note = getNote();
+            if (note != null)
+            {
+                txtContenido.Text = note.content;
+                txtContenido.Enabled = true;
+            }
         }
     }
 }
