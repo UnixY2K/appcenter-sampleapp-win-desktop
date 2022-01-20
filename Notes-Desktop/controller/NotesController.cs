@@ -6,17 +6,17 @@ class NotesController
 
     public bool addNote(Note note)
     {
-        return true;
+        return NoteDAO.instance.addNote(note);
     }
 
     public Note? getNote(int id)
     {
-        return null;
+        return NoteDAO.instance.getNote(id);
     }
 
     public List<Note> getAllNotes()
     {
-        return new List<Note>();
+        return NoteDAO.instance.getNotes();
     }
 
     static NotesController? _instance = null;

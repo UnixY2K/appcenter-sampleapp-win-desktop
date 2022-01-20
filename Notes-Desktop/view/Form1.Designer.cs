@@ -32,9 +32,9 @@
             this.txtContenido = new System.Windows.Forms.RichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nuevaNotaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.eliminarActualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.guardarActualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newNoteItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteNoteItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveNoteItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,6 +46,7 @@
             this.cmbNota.Name = "cmbNota";
             this.cmbNota.Size = new System.Drawing.Size(245, 23);
             this.cmbNota.TabIndex = 0;
+            this.cmbNota.SelectedIndexChanged += new System.EventHandler(this.cmbNota_SelectedIndexChanged);
             // 
             // txtContenido
             // 
@@ -69,30 +70,33 @@
             // archivoToolStripMenuItem
             // 
             this.archivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nuevaNotaToolStripMenuItem,
-            this.eliminarActualToolStripMenuItem,
-            this.guardarActualToolStripMenuItem});
+            this.newNoteItem,
+            this.deleteNoteItem,
+            this.saveNoteItem});
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
             this.archivoToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.archivoToolStripMenuItem.Text = "Archivo";
             // 
-            // nuevaNotaToolStripMenuItem
+            // newNoteItem
             // 
-            this.nuevaNotaToolStripMenuItem.Name = "nuevaNotaToolStripMenuItem";
-            this.nuevaNotaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.nuevaNotaToolStripMenuItem.Text = "Nueva Nota";
+            this.newNoteItem.Name = "newNoteItem";
+            this.newNoteItem.Size = new System.Drawing.Size(180, 22);
+            this.newNoteItem.Text = "Nueva Nota";
+            this.newNoteItem.Click += new System.EventHandler(this.newNoteItem_Click);
             // 
-            // eliminarActualToolStripMenuItem
+            // deleteNoteItem
             // 
-            this.eliminarActualToolStripMenuItem.Name = "eliminarActualToolStripMenuItem";
-            this.eliminarActualToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.eliminarActualToolStripMenuItem.Text = "Eliminar Actual";
+            this.deleteNoteItem.Name = "deleteNoteItem";
+            this.deleteNoteItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteNoteItem.Text = "Eliminar Actual";
+            this.deleteNoteItem.Click += new System.EventHandler(this.deleteNoteItem_Click);
             // 
-            // guardarActualToolStripMenuItem
+            // saveNoteItem
             // 
-            this.guardarActualToolStripMenuItem.Name = "guardarActualToolStripMenuItem";
-            this.guardarActualToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.guardarActualToolStripMenuItem.Text = "Guardar Actual";
+            this.saveNoteItem.Name = "saveNoteItem";
+            this.saveNoteItem.Size = new System.Drawing.Size(180, 22);
+            this.saveNoteItem.Text = "Guardar Actual";
+            this.saveNoteItem.Click += new System.EventHandler(this.saveNoteItem_Click);
             // 
             // Form1
             // 
@@ -118,8 +122,8 @@
         private RichTextBox txtContenido;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem archivoToolStripMenuItem;
-        private ToolStripMenuItem nuevaNotaToolStripMenuItem;
-        private ToolStripMenuItem eliminarActualToolStripMenuItem;
-        private ToolStripMenuItem guardarActualToolStripMenuItem;
+        private ToolStripMenuItem newNoteItem;
+        private ToolStripMenuItem deleteNoteItem;
+        private ToolStripMenuItem saveNoteItem;
     }
 }
