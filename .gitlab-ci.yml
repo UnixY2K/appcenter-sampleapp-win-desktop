@@ -9,16 +9,12 @@ stages:
   - test
   - release
 
-before_script:
-  - Set-Variable -Name "time" -Value (date -Format "%H:%m")
-  - echo ${time}
-  - echo "started by ${GITLAB_USER_NAME}"
-
 build:
   extends:
     - .shared_windows_runners
   stage: build
   script:
+    - choco feature enable -n allowGlobalConfirmation
     - choco install python
     - python ./setup_config.py
     - cd Notes-Desktop
