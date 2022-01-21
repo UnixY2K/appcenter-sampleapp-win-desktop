@@ -43,9 +43,12 @@ test:
     - dotnet test
 
 release:
+  image: archlinux:latest
   dependencies:
     - build
   stage: release
+  before_script:
+    - pacman -Sy --noconfirmzip
   script:
     - pushd Notes-Desktop/bin/Release/net6.0-windows/win-x64/publish/
     - zip -r ./release.zip .
@@ -62,7 +65,7 @@ distribute:
     - release
   stage: distribute
   before_script:
-    - pacman -Sy --noconfirm npm zip
+    - pacman -Sy --noconfirm npm
     - npm install -g appcenter-cli
   script:
     - appcenter distribute release -f .\release.zip --group "Public" --build-version $(date +%s) --release-notes-file .\changelist.md
