@@ -24,6 +24,7 @@ build:
     - python ./setup_config.py
     - cd Notes-Desktop
     - dotnet build
+    - dotnet publish -r win-x64 -c Release --no-self-contained
   artifacts:
     expire_in: 1 hour
     paths:
@@ -41,19 +42,18 @@ test:
     - dotnet test
 
 release:
-  extends:
-    - .shared_windows_runners
   dependencies:
     - build
   stage: release
   script:
-    - cd Notes-Desktop
-    - dotnet publish -r win-x64 -c Release --no-self-contained
-    - Compress-Archive -Path .\bin\Release\net6.0-windows\win-x64\* -DestinationPath .\bin\release.zip
+    - pushd Notes-Desktop/bin/Release/net6.0-windows/win-x64/publish/
+    - zip -r ./release.zip .
+    - popd
+    - mv Notes-Desktop/bin/Release/net6.0-windows/win-x64/publish/release.zip ./release.zip
   artifacts:
-    expire_in: never
+    expire_in: 1 day
     paths:
-      - Notes-Desktop/bin/release.zip
+      - ./release.zip
 
 distribute:
   image: node:4.2.2
