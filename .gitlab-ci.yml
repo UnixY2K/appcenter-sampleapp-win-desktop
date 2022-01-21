@@ -48,7 +48,7 @@ release:
     - build
   stage: release
   before_script:
-    - pacman -Sy --noconfirmzip
+    - pacman -Sy --noconfirm zip
   script:
     - pushd Notes-Desktop/bin/Release/net6.0-windows/win-x64/publish/
     - zip -r ./release.zip .
