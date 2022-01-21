@@ -15,8 +15,8 @@ build:
   stage: build
   script:
     - choco feature enable -n allowGlobalConfirmation
-    - choco install python
-    - refreshenv
+    - choco install python --version=3.10.2 -y
+    - $env:PATH+=";C:\Python310;C:\Python10\Scripts" # add to PATH without restart
     - python ./setup_config.py
     - cd Notes-Desktop
     - dotnet build
