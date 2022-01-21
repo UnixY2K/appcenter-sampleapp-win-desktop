@@ -16,6 +16,7 @@ build:
   script:
     - choco feature enable -n allowGlobalConfirmation
     - choco install python
+    - refreshenv
     - python ./setup_config.py
     - cd Notes-Desktop
     - dotnet build
