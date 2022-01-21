@@ -56,11 +56,10 @@ release:
       - Notes-Desktop/bin/release.zip
 
 distribute:
-  extends:
-    - .shared_windows_runners
+  image: node:4.2.2
   dependencies:
     - release
-  stage: release
+  stage: distribute
   before_script:
     - npm install -g appcenter-cli
   script:
