@@ -47,7 +47,6 @@ release:
     - build
   stage: release
   script:
-    - npm install -g appcenter-cli
     - cd Notes-Desktop
     - dotnet publish -r win-x64 -c Release --no-self-contained
     - Compress-Archive -Path .\bin\Release\net6.0-windows\win-x64\* -DestinationPath .\bin\release.zip
@@ -62,7 +61,8 @@ distribute:
   dependencies:
     - release
   stage: release
-  script:
+  before_script:
     - npm install -g appcenter-cli
+  script:
     - Set-Variable -Name "time" -Value (date -Format "%H:%m")
     - appcenter distribute release -f .\Notes-Desktop\bin\release.zip --group "Public" --build-version {time} --release-notes-file .\changelist.md
