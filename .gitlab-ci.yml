@@ -68,4 +68,4 @@ distribute:
     - pacman -Sy --noconfirm npm
     - npm install -g appcenter-cli
   script:
-    - appcenter distribute release -f .\release.zip --group "Public" --build-version $(date +%s) --release-notes-file .\changelist.md
+    - appcenter distribute release -f ./release.zip --group "Public" --build-version $(date +%s) --release-notes-file ./changelist.md
