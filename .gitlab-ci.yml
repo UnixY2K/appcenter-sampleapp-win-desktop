@@ -64,4 +64,4 @@ distribute:
   before_script:
     - npm install -g appcenter-cli
   script:
-    - appcenter distribute release -f .\Notes-Desktop\bin\release.zip --group "Public" --build-version $(date +%s) --release-notes-file .\changelist.md
+    - appcenter distribute release -f .\release.zip --group "Public" --build-version $(date +%s) --release-notes-file .\changelist.md
