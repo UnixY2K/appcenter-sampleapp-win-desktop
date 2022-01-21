@@ -1,8 +1,8 @@
 .shared_windows_runners:
   tags:
-  - shared-windows
-  - windows
-  - windows-1809
+    - shared-windows
+    - windows
+    - windows-1809
 
 stages:
   - build
@@ -10,27 +10,46 @@ stages:
   - release
 
 before_script:
- - Set-Variable -Name "time" -Value (date -Format "%H:%m")
- - echo ${time}
- - echo "started by ${GITLAB_USER_NAME}"
+  - Set-Variable -Name "time" -Value (date -Format "%H:%m")
+  - echo ${time}
+  - echo "started by ${GITLAB_USER_NAME}"
 
 build:
   extends:
-  - .shared_windows_runners
+    - .shared_windows_runners
   stage: build
   script:
-  - echo "running scripts in the build job"
+    - choco install python
+    - python ./setup_config.py
+    - cd Notes-Desktop
+    - dotnet build
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - Notes-Desktop/bin
+      - Notes-Desktop/obj
 
 test:
   extends:
-  - .shared_windows_runners
+    - .shared_windows_runners
+  dependencies:
+    - build
   stage: test
   script:
-  - echo "running scripts in the test job"
+    - cd Notes-Desktop
+    - dotnet test
 
 release:
   extends:
-  - .shared_windows_runners
-  stage: test
+    - .shared_windows_runners
+  dependencies:
+    - build
+  stage: release
   script:
-  - echo "running scripts in the test job"
+    - cd Notes-Desktop
+    - dotnet publish -r win-x64 -c Release --no-self-contained
+    - Compress-Archive -Path .\bin\Release\net6.0-windows\win-x64\* -DestinationPath .\bin\release.zip
+  artifacts:
+    expire_in: never
+    paths:
+      - Notes-Desktop/bin/release.zip
