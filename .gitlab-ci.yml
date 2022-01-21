@@ -8,6 +8,7 @@ stages:
   - build
   - test
   - release
+  - distribute
 
 before_script:
   - choco feature enable -n allowGlobalConfirmation
@@ -50,10 +51,18 @@ release:
     - cd Notes-Desktop
     - dotnet publish -r win-x64 -c Release --no-self-contained
     - Compress-Archive -Path .\bin\Release\net6.0-windows\win-x64\* -DestinationPath .\bin\release.zip
-    - cd ..
-    - Set-Variable -Name "time" -Value (date -Format "%H:%m")
-    - appcenter distribute release -f .\Notes-Desktop\bin\release.zip --group "Public" --build-version {time} --release-notes-file .\changelist.md
   artifacts:
     expire_in: never
     paths:
       - Notes-Desktop/bin/release.zip
+
+distribute:
+  extends:
+    - .shared_windows_runners
+  dependencies:
+    - release
+  stage: release
+  script:
+    - npm install -g appcenter-cli
+    - Set-Variable -Name "time" -Value (date -Format "%H:%m")
+    - appcenter distribute release -f .\Notes-Desktop\bin\release.zip --group "Public" --build-version {time} --release-notes-file .\changelist.md
