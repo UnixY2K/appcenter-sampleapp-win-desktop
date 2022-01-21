@@ -3,6 +3,9 @@
     - shared-windows
     - windows
     - windows-1809
+  before_script:
+    - choco feature enable -n allowGlobalConfirmation
+    - choco upgrade dotnet-sdk --version=6.0.101 -y
 
 stages:
   - build
@@ -10,9 +13,7 @@ stages:
   - release
   - distribute
 
-before_script:
-  - choco feature enable -n allowGlobalConfirmation
-  - choco upgrade dotnet-sdk --version=6.0.101 -y
+
 
 build:
   extends:
