@@ -63,5 +63,4 @@ distribute:
   before_script:
     - npm install -g appcenter-cli
   script:
-    - Set-Variable -Name "time" -Value (date -Format "%H:%m")
-    - appcenter distribute release -f .\Notes-Desktop\bin\release.zip --group "Public" --build-version {time} --release-notes-file .\changelist.md
+    - appcenter distribute release -f .\Notes-Desktop\bin\release.zip --group "Public" --build-version $(date +%s) --release-notes-file .\changelist.md
