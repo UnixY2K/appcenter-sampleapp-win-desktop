@@ -57,11 +57,12 @@ release:
       - ./release.zip
 
 distribute:
-  image: node:4.2.2
+  image: archlinux:latest
   dependencies:
     - release
   stage: distribute
   before_script:
+    - pacman -Sy --noconfirm npm zip
     - npm install -g appcenter-cli
   script:
     - appcenter distribute release -f .\release.zip --group "Public" --build-version $(date +%s) --release-notes-file .\changelist.md
